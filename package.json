@@ -20,7 +20,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js,",
     "dev": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
-    "dev:start": "concurrently \"npm run dev\" \"node index.js\""
+    "dev:start": "concurrently \"npm run dev\" \"node index.js\"",
+    "backend-test": "nyc --nycrc-path .nycrc-backend mocha"
   },
   "keywords": [],
   "author": "",
