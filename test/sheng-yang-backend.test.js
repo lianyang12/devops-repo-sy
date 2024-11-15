@@ -34,14 +34,14 @@ describe("Resource API", () => {
           done();
         });
     });
-    it("should add a new resource", (done) => {
+    it("Should add a new resource", (done) => {
       chai
         .request(baseUrl)
         .post("/add-game")
         .send({
-            name: "Test Resource 2",
-            price: "100",
-            image: "https://example.com/image.jpg",
+          name: "Test Resource 2",
+          price: "100",
+          image: "https://example.com/image.jpg",
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
