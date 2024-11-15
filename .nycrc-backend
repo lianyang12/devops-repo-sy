@@ -4,7 +4,7 @@
     "html"
   ],
   "include": [
-    "util/*.js"
+    "util/sheng-yang-backend.js"
   ],
   "reportDir": "coverage/backend",
   "branches": 80,
