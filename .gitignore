@@ -27,5 +27,10 @@ vendor/
 package-lock.json
 
 # Ignore tailwindcss generated files
-tailwind.config.js
 output.css
+
+# Ignore nyc output
+.nyc_output
+
+# Ignore gameDatabase.json
+gameDatabase.json
