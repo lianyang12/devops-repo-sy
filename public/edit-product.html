@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeaconStudios</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body onload="getGames()">
+    <header>
+        <h1>BeaconStudios</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="add-product.html">Add New Game</a>
+        <a href="edit-product.html">Edit Games</a>
+    </nav>
+    <div class="container" id="gameContainer">
+        <!-- Add more products as needed -->
+    </div>
+
+    <div id="editGameModal" class="fixed inset-0 bg-gray-500 bg-opacity-0 justify-center items-center hidden">
+        <div class="bg-white p-6 rounded-lg w-96 flex justify-center items-center flex-col">
+            <div class="flex justify-between items-center w-full mb-4">
+                <h3 class="text-xl font-semibold">Edit Resource</h3>
+
+                <!-- Form to edit game details -->
+                <div class="mt-4 w-full">
+                    <form class="space-y-4">
+                        <!-- Name Field -->
+                        <div class="flex justify-between">
+                            <label for="editName" class="block text-sm font-medium text-gray-700 w-1/3">Name:</label>
+                            <input type="text" id="editName" class="w-2/3 p-2 border border-gray-300 rounded-md"
+                                placeholder="Enter resource name" value="test">
+                        </div>
+
+                        <br>
+
+                        <!-- Price Field -->
+                        <div class="flex justify-between">
+                            <label for="editPrice" class="block text-sm font-medium text-gray-700 w-1/3">Price:</label>
+                            <input type="text" id="editPrice" class="w-2/3 p-2 border border-gray-300 rounded-md"
+                                placeholder="Enter resource price" value="1">
+                        </div>
+
+                        <br>
+
+                        <!-- Image Field -->
+                        <div class="flex justify-between">
+                            <label for="editImage" class="block text-sm font-medium text-gray-700 w-1/3">Image:</label>
+                            <input type="file" id="editImage" class="w-2/3 p-2 border border-gray-300 rounded-md" 
+                                   accept="image/*">
+                        </div>
+
+                        <p align="right" id="editMessage" class="text-sm text-gray-500"></p>
+                    </form>
+                </div>
+
+                <!-- Modal footer buttons -->
+                <div class="mt-4 flex justify-end space-x-4 w-full">
+                    <button id="updateButton" class="bg-blue-500 text-white px-4 py-2 rounded">Update Resource</button>
+                    <button id="closeModalBtn" class="bg-white-300 px-4 py-2 rounded text-gray-700">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zhixiang-frontend.js"></script>
+</body>
+
+</html>
