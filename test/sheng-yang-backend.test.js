@@ -68,7 +68,7 @@ describe("Resource API", () => {
     });
     it("should return 500 for backend error", (done) => {
       chai
-        .request(baseUrl1)
+        .request(baseUrl)
         .post("/add-game")
         .send({
           name: "",
