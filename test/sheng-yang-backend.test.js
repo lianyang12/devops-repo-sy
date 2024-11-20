@@ -1,7 +1,9 @@
 const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const { app, server } = require("../index");
+const fs = require("fs/promises");
 const chai = require("chai");
+const sinon = require("sinon");
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 let baseUrl;
@@ -29,8 +31,8 @@ describe("Resource API", () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
-        //   expect(res.body.price).to.equal(undefined);
-        //   expect(res.body.message).to.equal(err.message);
+          //   expect(res.body.price).to.equal(undefined);
+          //   expect(res.body.message).to.equal(err.message);
           done();
         });
     });
@@ -61,25 +63,31 @@ describe("Resource API", () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal("Game already exists");
-        //   expect(res.body.price).to.equal(undefined);
-        //   expect(res.body.message).to.equal(err.message);
+          //   expect(res.body.price).to.equal(undefined);
+          //   expect(res.body.message).to.equal(err.message);
           done();
         });
     });
-    it("should return 500 for backend error", (done) => {
+    it("should return 500 for database error", (done) => {
+      const writeStub = sinon
+        .stub(fs, "readFile")
+        .throws(new Error("Simulated Server Error"));
+
       chai
         .request(baseUrl)
         .post("/add-game")
         .send({
-          name: "",
-          price: "",
-          image: "",
+          name: "Test Resource",
+          price: "100",
+          image: "https://example.com/image.jpg",
         })
         .end((err, res) => {
           expect(res).to.have.status(500);
-        //   expect(res.body.price).to.equal(undefined);
-        //   expect(res.body.message).to.equal(err.message);
+          expect(res.body)
+            .to.have.property("message")
+            .that.equals("Simulated Server Error");
           done();
+          sinon.restore();
         });
     });
   });
