@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/output.css" />
+  <script src="js/sheng-yang-frontend.js"></script>
+  <title>Add Product</title>
+</head>
+<div class="flex flex-col justify-center m-20">
+
+  <body>
+    <h1 class="font-bold text-[50px] text-center">Add Product</h1>
+    <label class="pt-5" for="name">Name:</label>
+    <input class="border-2 rounded-md" type="text" id="name" name="name" required />
+    <label class="pt-5" for="price">Price:</label>
+    <input class="border-2 rounded-md" type="text" id="price" name="price" required />
+    <label class="pt-5" for="image">Image:</label>
+    <input class="border-2 rounded-md" type="url" id="image" name="image" />
+    <div class="flex flex-row justify-evenly">
+      <button class="bg-gray-950 hover:bg-gray-950 text-white font-bold py-2 px-4 rounded mt-5" onclick="window.location.href='index.html'">
+        Back
+      </button>
+      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-5" type="reset" onclick="window.location.reload()">
+        Reset
+      </button>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5" type="submit" onclick="addGameForm()">
+        Submit
+      </button>
+    </div>
+  </body>
+</div>
+
+</html>
