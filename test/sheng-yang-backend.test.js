@@ -34,22 +34,6 @@ describe("Resource API", () => {
           done();
         });
     });
-    it("should return 500 for input error", (done) => {
-      chai
-        .request(baseUrl)
-        .post("/add-game")
-        .send({
-          name: "",
-          price: "",
-          image: "",
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(500);
-        //   expect(res.body.price).to.equal(undefined);
-        //   expect(res.body.message).to.equal(err.message);
-          done();
-        });
-    });
     it("Should add a new resource", (done) => {
       chai
         .request(baseUrl)
@@ -62,6 +46,22 @@ describe("Resource API", () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an("array");
+          done();
+        });
+    });
+    it("should return 400 for same data", (done) => {
+      chai
+        .request(baseUrl)
+        .post("/add-game")
+        .send({
+          name: "Test Resource 2",
+          price: "100",
+          image: "https://example.com/image.jpg",
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+        //   expect(res.body.price).to.equal(undefined);
+        //   expect(res.body.message).to.equal(err.message);
           done();
         });
     });
