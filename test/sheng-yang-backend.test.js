@@ -31,8 +31,6 @@ describe("Resource API", () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
-          //   expect(res.body.price).to.equal(undefined);
-          //   expect(res.body.message).to.equal(err.message);
           done();
         });
     });
@@ -63,14 +61,13 @@ describe("Resource API", () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal("Game already exists");
-          //   expect(res.body.price).to.equal(undefined);
-          //   expect(res.body.message).to.equal(err.message);
           done();
         });
     });
     it("should return 500 for database error", (done) => {
+      // Mock fs.writeFile to throw an error for this specific test
       const writeStub = sinon
-        .stub(fs, "readFile")
+        .stub(fs, "writeFile")
         .throws(new Error("Simulated Server Error"));
 
       chai
@@ -86,8 +83,10 @@ describe("Resource API", () => {
           expect(res.body)
             .to.have.property("message")
             .that.equals("Simulated Server Error");
+
+          // Restore the original method after this test
+          writeStub.restore();
           done();
-          sinon.restore();
         });
     });
   });
