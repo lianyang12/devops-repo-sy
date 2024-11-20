@@ -64,11 +64,11 @@ describe("Resource API", () => {
           done();
         });
     });
-    it("should return 500 for database error", (done) => {
+    it("should return 500 for database error with read error", (done) => {
       // Mock fs.writeFile to throw an error for this specific test
-      const writeStub = sinon
-        .stub(fs, "writeFile")
-        .throws(new Error("Simulated Server Error"));
+      const readStub = sinon
+        .stub(fs, "readFile")
+        .throws(new Error("Simulated Read Error"));
 
       chai
         .request(baseUrl)
@@ -82,7 +82,32 @@ describe("Resource API", () => {
           expect(res).to.have.status(500);
           expect(res.body)
             .to.have.property("message")
-            .that.equals("Simulated Server Error");
+            .that.equals("Simulated Read Error");
+
+          // Restore the original method after this test
+          readStub.restore();
+          done();
+        });
+    });
+    it("should return 500 for database error with write error", (done) => {
+      // Mock fs.writeFile to throw an error for this specific test
+      const writeStub = sinon
+        .stub(fs, "writeFile")
+        .throws(new Error("Simulated Write Error"));
+
+      chai
+        .request(baseUrl)
+        .post("/add-game")
+        .send({
+          name: "Test Resource",
+          price: "100",
+          image: "https://example.com/image.jpg",
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(500);
+          expect(res.body)
+            .to.have.property("message")
+            .that.equals("Simulated Write Error");
 
           // Restore the original method after this test
           writeStub.restore();
