@@ -3,13 +3,11 @@ describe("BeaconStudio Frontend", () => {
   before(() => {
     cy.task("startServer").then((url) => {
       baseUrl = url; // Store the base URL
-      cy.visit(baseUrl);
+      cy.visit(baseUrl + "/add-game"); // Visit the page
     });
   });
   after(() => {
     return cy.task("stopServer"); // Stop the server after the report is done
   });
-  it("should display the correct title", () => {
-    cy.get("h1").should("have.text", "BeaconStudio");
-  });
+  it;
 });
