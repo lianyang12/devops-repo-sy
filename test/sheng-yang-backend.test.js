@@ -48,6 +48,20 @@ describe("Resource API", () => {
           expect(res.body).to.be.an("array");
           done();
         });
+    });it("should add a new resource with placeholder image", (done) => {
+      chai
+        .request(baseUrl)
+        .post("/add-game")
+        .send({
+          name: "Test Resource 3",
+          price: "1.20",
+          image: "",
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body).to.be.an("array");
+          done();
+        });
     });
     it("should return 400 for same data", (done) => {
       chai
