@@ -30,7 +30,7 @@ package-lock.json
 output.css
 
 # Ignore nyc output
-.nyc_output
+.nyc_output/
 
-# Ignore gameDatabase.json
-gameDatabase.json
+# Ignore coverage output
+coverage/
