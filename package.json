@@ -8,9 +8,11 @@
   "description": "Do pull a repo from the main branch",
   "main": "index.js",
   "dependencies": {
+    "@cypress/code-coverage": "^3.13.7",
     "body-parser": "^1.20.3",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
+    "cypress": "^13.16.0",
     "express": "^4.21.1",
     "mocha": "^10.8.2",
     "nodemon": "^3.1.7",
@@ -21,7 +23,9 @@
     "start": "node index.js,",
     "dev": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
     "dev:start": "concurrently \"npm run dev\" \"node index.js\"",
-    "backend-test": "nyc --nycrc-path .nycrc-backend mocha"
+    "backend-test": "nyc --nycrc-path .nycrc-backend mocha",
+    "frontend-instrument": "xcopy public instrumented /I /E /Y & nyc instrument public instrumented",
+    "frontend-test": "rmdir -r .nyc_output & nyc --nycrc-path .nycrc-frontend cypress run"
   },
   "keywords": [],
   "author": "",
