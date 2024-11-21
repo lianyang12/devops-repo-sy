@@ -7,7 +7,7 @@ const sinon = require("sinon");
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 let baseUrl;
-describe("Resource API", () => {
+describe("BeaconStudio API", () => {
   before(async () => {
     const { address, port } = await server.address();
     baseUrl = `http://${address == "::" ? "localhost" : address}:${port}`;
