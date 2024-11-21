@@ -31,6 +31,3 @@ output.css
 
 # Ignore nyc output
 .nyc_output/
-
-# Ignore coverage output
-coverage/
