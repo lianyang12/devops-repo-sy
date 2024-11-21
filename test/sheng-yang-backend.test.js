@@ -79,7 +79,7 @@ describe("BeaconStudio API", () => {
         });
     });
     it("should return 500 for database error with read error", (done) => {
-      // Mock fs.writeFile to throw an error for this specific test
+      // Mock fs.readFile to throw an error for this specific test
       const readStub = sinon
         .stub(fs, "readFile")
         .throws(new Error("Simulated Read Error"));
