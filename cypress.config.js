@@ -16,8 +16,8 @@ module.exports = defineConfig({
             server = spawn("node", ["-r", "nyc", "index-test.js"]);
             server.stdout.on("data", (data) => {
               console.log(data.toString()); // Log the output for debugging
-              if (data.toString().includes("Demo project at:")) {
-                const baseUrlPrefix = "Demo project at: ";
+              if (data.toString().includes("Project hosted at:")) {
+                const baseUrlPrefix = "Project hosted at: ";
                 const startIndex = data.toString().indexOf(baseUrlPrefix);
                 if (startIndex !== -1) {
                   baseUrl = data
