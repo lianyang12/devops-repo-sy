@@ -29,11 +29,20 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal('Name and Price are required!');
     });
   });
-  it("should prompt with an alert without name filled", () => {
-    cy.get("#price").type(100)
+  it("should prompt with an alert saying price must be more than 0", () => {
+    cy.get("#name").type("Test frontend resource 1")
+    cy.get("#price").type(-1)
     cy.get('button[type=submit]').click();
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Name and Price are required!');
+    });
+  });
+  it("should add a new data", () => {
+    cy.get("#name").type("Test frontend resource 1")
+    cy.get("#price").type(10)
+    cy.get('button[type=submit]').click();
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Resource added successfully!');
     });
   });
 });
