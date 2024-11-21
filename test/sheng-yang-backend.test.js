@@ -92,7 +92,7 @@ describe("BeaconStudio API", () => {
           price: "100",
           image: "https://example.com/image.jpg",
         })
-        .end((err, res) => {
+        .end((res) => {
           expect(res).to.have.status(500);
           expect(res.body)
             .to.have.property("message")
@@ -117,7 +117,7 @@ describe("BeaconStudio API", () => {
           price: "100",
           image: "https://example.com/image.jpg",
         })
-        .end((err, res) => {
+        .end((res) => {
           expect(res).to.have.status(500);
           expect(res.body)
             .to.have.property("message")
