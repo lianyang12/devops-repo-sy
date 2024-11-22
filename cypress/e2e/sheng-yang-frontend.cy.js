@@ -57,6 +57,7 @@ describe("BeaconStudio Frontend", () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Network error. Please try again later.');
     });
+    cy.wait(1000);
   });
   it("should return unexpected error", () => {
     cy.get("#name").type("Unexpected error test")
