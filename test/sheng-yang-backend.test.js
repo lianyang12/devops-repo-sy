@@ -36,6 +36,7 @@ describe("BeaconStudio API", () => {
 
   describe("POST /add-game", () => {
     it("should return 201 for validation errors", (done) => {
+      sinon.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -51,6 +52,7 @@ describe("BeaconStudio API", () => {
     });
 
     it("Should add a new resource", (done) => {
+      sinon.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -67,6 +69,7 @@ describe("BeaconStudio API", () => {
     });
 
     it("should add a new resource with placeholder image", (done) => {
+      sinon.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -83,6 +86,7 @@ describe("BeaconStudio API", () => {
     });
 
     it("should return 400 for same data", (done) => {
+      sinon.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
