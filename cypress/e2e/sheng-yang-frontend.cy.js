@@ -51,6 +51,8 @@ describe("BeaconStudio Frontend", () => {
     cy.intercept("POST", "/add-game", {
       forceNetworkError: true,
     });
+    cy.get("#name").type("Network error test")
+    cy.get("#price").type(20)
     cy.get('button[type=submit]').click();
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Network error. Please try again later.');
