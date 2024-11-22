@@ -103,8 +103,8 @@ describe("BeaconStudio API", () => {
         });
     });
 
-    it("should return 500 for database error with write error", (done) => {
-      writeStub.throws(new Error("Simulated Write Error"));
+    it("should return 500 for database error with write & read error", (done) => {
+      writeStub.throws(new Error("Simulated Write & Read Error"));
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -117,7 +117,7 @@ describe("BeaconStudio API", () => {
           expect(res).to.have.status(500);
           expect(res.body)
             .to.have.property("message")
-            .that.equals("Simulated Write Error");
+            .that.equals("Simulated Write & Read Error");
           done();
         });
     });
