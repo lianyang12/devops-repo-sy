@@ -5,6 +5,7 @@ const fs = require("fs/promises");
 const chai = require("chai");
 const sinon = require("sinon");
 const chaiHttp = require("chai-http");
+const { read } = require("fs");
 chai.use(chaiHttp);
 
 let baseUrl;
@@ -18,6 +19,7 @@ describe("BeaconStudio API", () => {
   });
 
   beforeEach(async () => {
+    readStub = sinon.stub(fs, "readFile");
     writeStub = sinon.stub(fs, "writeFile");
   });
 
