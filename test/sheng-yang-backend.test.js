@@ -27,8 +27,7 @@ describe("BeaconStudio API", () => {
   });
 
   afterEach(() => {
-    readStub.restore();
-    writeStub.restore();
+    sinon.restore();
   });
 
   after(() => {
