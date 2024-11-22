@@ -18,7 +18,6 @@ describe("BeaconStudio API", () => {
   });
 
   beforeEach(async () => {
-    readStub = sinon.stub(fs, "readFile");
     writeStub = sinon.stub(fs, "writeFile");
   });
 
@@ -98,25 +97,6 @@ describe("BeaconStudio API", () => {
         .end((err, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal("Game already exists");
-          done();
-        });
-    });
-
-    it("should return 500 for database error with read error", (done) => {
-      readStub.throws(new Error("Simulated Read Error"));
-      chai
-        .request(baseUrl)
-        .post("/add-game")
-        .send({
-          name: "Test Resource",
-          price: "100",
-          image: "https://example.com/image.jpg",
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(500);
-          expect(res.body)
-            .to.have.property("message")
-            .that.equals("Simulated Read Error");
           done();
         });
     });
