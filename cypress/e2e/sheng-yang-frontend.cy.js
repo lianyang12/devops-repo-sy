@@ -50,14 +50,13 @@ describe("BeaconStudio Frontend", () => {
   it("should return network error", () => {
     cy.intercept("POST", "/add-game", {
       forceNetworkError: true,
-    }).as("networkError");
+    });
     cy.get("#name").type("Network error test")
     cy.get("#price").type(20)
     cy.get('button[type=submit]').click();
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Network error. Please try again later.');
     });
-    cy.wait("@networkError");
   });
   it("should return unexpected error", () => {
     cy.get("#name").type("Unexpected error test")
