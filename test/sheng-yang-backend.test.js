@@ -6,12 +6,31 @@ const chai = require("chai");
 const sinon = require("sinon");
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
+
 let baseUrl;
+let readStub;
+let writeStub;
+
 describe("BeaconStudio API", () => {
   before(async () => {
     const { address, port } = await server.address();
     baseUrl = `http://${address == "::" ? "localhost" : address}:${port}`;
   });
+
+  beforeEach(async () => {
+    readStub = sinon
+      .stub(fs, "readFile")
+      .throws(new Error("Simulated Read Error"));
+    writeStub = sinon
+      .stub(fs, "writeFile")
+      .throws(new Error("Simulated Write Error"));
+  });
+
+  afterEach(() => {
+    readStub.restore();
+    writeStub.restore();
+  });
+
   after(() => {
     return new Promise((resolve) => {
       server.close(() => {
@@ -19,8 +38,11 @@ describe("BeaconStudio API", () => {
       });
     });
   });
+
   describe("POST /add-game", () => {
     it("should return 201 for validation errors", (done) => {
+      readStub.restore();
+      writeStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -34,7 +56,10 @@ describe("BeaconStudio API", () => {
           done();
         });
     });
+
     it("Should add a new resource", (done) => {
+      readStub.restore();
+      writeStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -48,7 +73,11 @@ describe("BeaconStudio API", () => {
           expect(res.body).to.be.an("array");
           done();
         });
-    });it("should add a new resource with placeholder image", (done) => {
+    });
+
+    it("should add a new resource with placeholder image", (done) => {
+      readStub.restore();
+      writeStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -63,7 +92,10 @@ describe("BeaconStudio API", () => {
           done();
         });
     });
+
     it("should return 400 for same data", (done) => {
+      readStub.restore();
+      writeStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -78,12 +110,9 @@ describe("BeaconStudio API", () => {
           done();
         });
     });
-    it("should return 500 for database error with read error", (done) => {
-      // Mock fs.readFile to throw an error for this specific test
-      const readStub = sinon
-        .stub(fs, "readFile")
-        .throws(new Error("Simulated Read Error"));
 
+    it("should return 500 for database error with read error", (done) => {
+      writeStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -97,18 +126,13 @@ describe("BeaconStudio API", () => {
           expect(res.body)
             .to.have.property("message")
             .that.equals("Simulated Read Error");
-
-          // Restore the original method after this test
-          readStub.restore();
           done();
+          readStub.restore();
         });
     });
-    it("should return 500 for database error with write error", (done) => {
-      // Mock fs.writeFile to throw an error for this specific test
-      const writeStub = sinon
-        .stub(fs, "writeFile")
-        .throws(new Error("Simulated Write Error"));
 
+    it("should return 500 for database error with write error", (done) => {
+      readStub.restore();
       chai
         .request(baseUrl)
         .post("/add-game")
@@ -122,10 +146,8 @@ describe("BeaconStudio API", () => {
           expect(res.body)
             .to.have.property("message")
             .that.equals("Simulated Write Error");
-
-          // Restore the original method after this test
-          writeStub.restore();
           done();
+          writeStub.restore();
         });
     });
   });
