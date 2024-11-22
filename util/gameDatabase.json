@@ -1,1 +1,1 @@
-[{"name":"Test Resource","price":100,"image":"https://example.com/image.jpg","id":"1732080405230426"}]
+[{"name":"Test Resource","price":100,"image":"https://example.com/image.jpg","id":"1732080405230426"},{"name":"Test frontend resource 1","price":10,"image":"https://via.placeholder.com/150","id":"1732249560686392"},{"name":"Network error test","price":20,"image":"https://via.placeholder.com/150","id":"1732249561350916"},{"name":"Unexpected error test","price":20,"image":"https://via.placeholder.com/150","id":"1732249562334585"}]
