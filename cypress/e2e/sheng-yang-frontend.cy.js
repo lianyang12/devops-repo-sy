@@ -37,7 +37,7 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal("Price must be a number greater than 0!");
     });
   });
-  it("should add a new data", { browser: "electron" }, () => {
+  it("should add a new data on electron", { browser: "electron" }, () => {
     cy.get("#name").type("Test frontend electron");
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
@@ -45,7 +45,7 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal("Resource added successfully!");
     });
   });
-  it("should add a new data", { browser: "chrome" }, () => {
+  it("should add a new data on chrome", { browser: "chrome" }, () => {
     cy.get("#name").type("Test frontend chrome");
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
@@ -53,7 +53,7 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal("Resource added successfully!");
     });
   });
-  it("should add a new data", { browser: "firefox" }, () => {
+  it("should add a new data on firefox", { browser: "firefox" }, () => {
     cy.get("#name").type("Test frontend firefox");
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
