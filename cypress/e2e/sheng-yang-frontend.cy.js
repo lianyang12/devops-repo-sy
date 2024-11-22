@@ -58,4 +58,15 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal('Network error. Please try again later.');
     });
   });
+  it("should return unexpected error", () => {
+    cy.get("#name").type("Unexpected error test")
+    cy.get("#price").type(20)
+    cy.get('button[type=submit]').click();
+    cy.intercept("POST", "/add-game", {
+      forceNetworkError: true,
+    });
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('An unexpected error occurred.');
+    });
+  });
 });
