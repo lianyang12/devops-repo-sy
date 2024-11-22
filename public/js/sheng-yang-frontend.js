@@ -29,7 +29,6 @@ function addGameForm() {
           alert("Error: " + response.message);
         } else {
           alert("Resource added successfully!");
-          window.location.href = "index.html";
         }
       } catch (error) {
         alert("An unexpected error occurred.");
