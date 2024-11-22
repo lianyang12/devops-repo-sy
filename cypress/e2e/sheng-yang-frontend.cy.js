@@ -69,4 +69,13 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal('An unexpected error occurred.');
     });
   });
+  it("should return unexpected error", () => {
+    cy.intercept("POST", "/add-game", {
+      body: { message: "Simulated response error" },
+    });
+    cy.get('button[type=submit]').click();
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Error: Simulated response error');
+    });
+  });
 });
