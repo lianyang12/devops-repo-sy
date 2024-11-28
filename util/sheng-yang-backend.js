@@ -23,20 +23,25 @@ async function writeJSON(object, filename) {
   }
 }
 
-
 async function addGame(req, res) {
   const { name, price, image } = req.body;
   try {
+    if (!price || isNaN(parseFloat(price))) {
+      return res.status(400).json({ message: "Invalid or missing price" });
+    }
+
     const allGames = await readJSON("./util/gameDatabase.json");
-    if (allGames.some(game => game.name === name)) {
+    if (allGames.some((game) => game.name === name)) {
       return res.status(400).json({ message: "Game already exists" });
     }
+
     const newData = new GameDatabase(
       name,
-      parseFloat(price),
+      price_float,
       image || "https://via.placeholder.com/150"
     );
     const updatedData = await writeJSON(newData, "./util/gameDatabase.json");
+
     return res.status(201).json(updatedData);
   } catch (error) {
     console.error("Error adding game:", error);
