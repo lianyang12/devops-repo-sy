@@ -25,10 +25,7 @@
     "dev:start": "concurrently \"npm run dev\" \"node index.js\"",
     "backend-test": "nyc --nycrc-path .nycrc-backend mocha",
     "frontend-instrument": "xcopy public instrumented /I /E /Y & nyc instrument public instrumented",
-    "frontend-electron": "nyc --nycrc-path .nycrc-frontend cypress run",
-    "frontend-chrome": "nyc --nycrc-path .nycrc-frontend cypress run --browser chrome",
-    "frontend-firefox": "nyc --nycrc-path .nycrc-frontend cypress run --browser firefox",
-    "frontend-test": "rmdir -r .nyc_output & concurrently \"npm run frontend-electron\" \"npm run frontend-chrome\" \"npm run frontend-firefox\""
+    "frontend-test": "rmdir -r .nyc_output & nyc --nycrc-path .nycrc-frontend cypress run & nyc --nycrc-path .nycrc-frontend cypress run --browser chrome &  nyc --nycrc-path .nycrc-frontend cypress run --browser firefox"
   },
   "keywords": [],
   "author": "",
