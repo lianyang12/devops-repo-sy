@@ -64,6 +64,7 @@ describe("BeaconStudio API", () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an("array");
+          expect(res.body[0].image).to.equal("https://example.com/image.jpg");
           done();
         });
     });
@@ -81,6 +82,7 @@ describe("BeaconStudio API", () => {
         .end((err, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.an("array");
+          expect(res.body[0].image).to.equal("https://via.placeholder.com/150");
           done();
         });
     });
