@@ -1,11 +1,12 @@
 const { describe, it } = require("mocha");
 const { expect } = require("chai");
+const { assert } = require("chai");
 const { app, server } = require("../index");
 const fs = require("fs/promises");
 const chai = require("chai");
 const sinon = require("sinon");
 const chaiHttp = require("chai-http");
-chai.use(chaiHttp);
+chai.use(chaiHttp); 
 
 let baseUrl;
 let readStub;
@@ -63,7 +64,7 @@ describe("BeaconStudio API", () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
-          expect(res.body).to.be.an("array");
+          assert.isArray(res.body);
           expect(res.body[1].image).to.equal("https://example.com/image.jpg");
           done();
         });
@@ -81,7 +82,7 @@ describe("BeaconStudio API", () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
-          expect(res.body).to.be.an("array");
+          assert.isArray(res.body);
           expect(res.body[2].image).to.equal("https://via.placeholder.com/150");
           done();
         });
