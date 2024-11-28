@@ -36,7 +36,7 @@ describe("BeaconStudio API", () => {
   });
 
   describe("POST /add-game", () => {
-    it("should return 500 for validation errors", (done) => {
+    it("should return 400 for validation errors", (done) => {
       sinon.restore();
       chai
         .request(baseUrl)
@@ -47,7 +47,7 @@ describe("BeaconStudio API", () => {
           image: "https://example.com/image.jpg",
         })
         .end((err, res) => {
-          expect(res).to.have.status(500);
+          expect(res).to.have.status(400);
           done();
         });
     });

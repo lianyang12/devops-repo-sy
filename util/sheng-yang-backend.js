@@ -37,7 +37,7 @@ async function addGame(req, res) {
 
     const newData = new GameDatabase(
       name,
-      price_float,
+      price,
       image || "https://via.placeholder.com/150"
     );
     const updatedData = await writeJSON(newData, "./util/gameDatabase.json");
