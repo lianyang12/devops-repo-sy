@@ -95,7 +95,7 @@ describe("BeaconStudio API", () => {
         .request(baseUrl)
         .post("/add-game")
         .send({
-          name: "Test Resource 2",
+          name: "test resource 2",
           price: "100",
           image: "https://example.com/image.jpg",
         })
