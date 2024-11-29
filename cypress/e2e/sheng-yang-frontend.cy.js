@@ -61,6 +61,30 @@ describe("BeaconStudio Frontend", () => {
       expect(str).to.equal("Game added successfully!");
     });
   });
+  it("should prompt game already exists on electron", { browser: "electron" }, () => {
+    cy.get("#name").type("Test frontend electron");
+    cy.get("#price").type(10);
+    cy.get("button[type=submit]").click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("Error: Game already exists");
+    });
+  });
+  it("should prompt game already exists on chrome", { browser: "chrome" }, () => {
+    cy.get("#name").type("Test frontend chrome");
+    cy.get("#price").type(10);
+    cy.get("button[type=submit]").click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("Error: Game already exists");
+    });
+  });
+  it("should prompt game already exists on firefox", { browser: "firefox" }, () => {
+    cy.get("#name").type("Test frontend firefox");
+    cy.get("#price").type(10);
+    cy.get("button[type=submit]").click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("Error: Game already exists");
+    });
+  });
   it("should return network error", () => {
     cy.intercept("POST", "/add-game", {
       forceNetworkError: true,
