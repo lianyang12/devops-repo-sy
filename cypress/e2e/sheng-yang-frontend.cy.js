@@ -42,7 +42,7 @@ describe("BeaconStudio Frontend", () => {
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("Resource added successfully!");
+      expect(str).to.equal("Game added successfully!");
     });
   });
   it("should add a new data on chrome", { browser: "chrome" }, () => {
@@ -50,7 +50,7 @@ describe("BeaconStudio Frontend", () => {
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("Resource added successfully!");
+      expect(str).to.equal("Game added successfully!");
     });
   });
   it("should add a new data on firefox", { browser: "firefox" }, () => {
@@ -58,7 +58,7 @@ describe("BeaconStudio Frontend", () => {
     cy.get("#price").type(10);
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("Resource added successfully!");
+      expect(str).to.equal("Game added successfully!");
     });
   });
   it("should return network error", () => {

@@ -28,7 +28,7 @@ function addGameForm() {
         if (response.message) {
           alert("Error: " + response.message);
         } else {
-          alert("Resource added successfully!");
+          alert("Game added successfully!");
         }
       } catch (error) {
         alert("An unexpected error occurred.");
