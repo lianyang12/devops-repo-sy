@@ -88,7 +88,7 @@ describe("BeaconStudio API", () => {
         });
     });
 
-    it("should return 400 for same data in database", (done) => {
+    it("should return 400 for same game name in database", (done) => {
       sinon.restore();
       chai
         .request(baseUrl)
