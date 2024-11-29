@@ -20,7 +20,7 @@ describe("BeaconStudio API", () => {
 
   beforeEach(async () => {
     readStub = sinon.stub(fs, "readFile");
-    writeStub = sinon.stub(fs, "writeFile");
+    errorAddStub = sinon.stub(fs, "writeFile");
   });
 
   afterEach(() => {
@@ -106,7 +106,8 @@ describe("BeaconStudio API", () => {
     });
 
     it("should return 500 for database error with write & read error", (done) => {
-      writeStub.throws(new Error("Simulated Write & Read Error"));
+      readStub.throws(new Error("Simulated Read Error"));
+      errorAddStub.throws(new Error("Simulated Write & Read Error"));
       chai
         .request(baseUrl)
         .post("/add-game")
