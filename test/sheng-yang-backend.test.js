@@ -48,6 +48,7 @@ describe("BeaconStudio API", () => {
         })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          expect(res.body.message).to.equal("Invalid or missing price")
           done();
         });
     });
