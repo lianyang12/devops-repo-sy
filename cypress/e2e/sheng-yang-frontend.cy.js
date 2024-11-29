@@ -9,20 +9,20 @@ describe("BeaconStudio Frontend", () => {
   after(() => {
     return cy.task("stopServer"); // Stop the server after the report is done
   });
-  it("should prompt with an alert", () => {
+  it("should prompt an alert window", () => {
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Name and Price are required!");
     });
   });
-  it("should prompt with an alert without price filled", () => {
+  it("should prompt an alert window without price filled", () => {
     cy.get("#name").type("Test frontend resource 1");
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Name and Price are required!");
     });
   });
-  it("should prompt with an alert without name filled", () => {
+  it("should prompt an alert window without name filled", () => {
     cy.get("#price").type(100);
     cy.get("button[type=submit]").click();
     cy.on("window:alert", (str) => {
