@@ -31,7 +31,9 @@ async function addGame(req, res) {
     }
 
     const allGames = await readJSON("./util/gameDatabase.json");
-    if (allGames.some((game) => game.name === name)) {
+    if (
+      allGames.some((game) => game.name.toLowerCase() === name.toLowerCase())
+    ) {
       return res.status(400).json({ message: "Game already exists" });
     }
 
