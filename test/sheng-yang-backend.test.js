@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 let baseUrl;
 let readStub;
-let writeStub;
+let errorAddStub;
 
 describe("BeaconStudio API", () => {
   before(async () => {
