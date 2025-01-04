@@ -23,9 +23,6 @@ Thumbs.db
 # Ignore dependency directories
 vendor/
 
-# Ignore npm lock file
-package-lock.json
-
 # Ignore tailwindcss generated files
 output.css
 
