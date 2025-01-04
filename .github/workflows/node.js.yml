@@ -31,8 +31,9 @@ jobs:
       run: ls -la public
     - name: Instrument Frontend Code
       run: |
-        cp -R public instrumented --in-place
-        npx nyc instrument instrumented instrumented
+        mkdir -p instrumented
+        cp -R public/* instrumented/
+        npx nyc instrument public instrumented --output instrumented
     - name: Run Frontend Tests (Chrome)
       run: npm run frontend-test:chrome
     - name: Run Frontend Tests (Cypress)
