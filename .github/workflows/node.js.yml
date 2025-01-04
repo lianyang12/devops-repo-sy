@@ -33,4 +33,4 @@ jobs:
     - name: Instrument the frontend code
       run: cp -R public instrumented & npx nyc instrument public instrumented
     - name: Run the frontend test cases
-      run: npm run frontend-test
+      run: npm run frontend-test-GA
