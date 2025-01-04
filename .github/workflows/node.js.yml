@@ -11,13 +11,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -28,12 +25,18 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - name: Run tests in "tests" folder
+    - name: Run Backend Tests
       run: npm run backend-test
-    - name: Instrument the frontend code (chrome)
-      run: cp -R public instrumented & npx nyc instrument public instrumented & npm run frontend-test:chrome
-    - name: Instrument the frontend code (cypress)
-      run: cp -R public instrumented & npx nyc instrument public instrumented & npm run frontend-test:cypress
-    - name: Instrument the frontend code (firefox)
-      run: cp -R public instrumented & npx nyc instrument public instrumented & npm run frontend-test:firefox
-
+    - name: Debug Public Folder
+      run: ls -la public
+    - name: Instrument Frontend Code
+      run: |
+        mkdir -p instrumented
+        cp -R public/* instrumented/
+        npx nyc instrument instrumented instrumented
+    - name: Run Frontend Tests (Chrome)
+      run: npm run frontend-test:chrome
+    - name: Run Frontend Tests (Cypress)
+      run: npm run frontend-test:cypress
+    - name: Run Frontend Tests (Firefox)
+      run: npm run frontend-test:firefox
