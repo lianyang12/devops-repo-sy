@@ -43,7 +43,7 @@ jobs:
         cp -R public/* instrumented-chrome/
         npx nyc instrument public instrumented-chrome --output instrumented-chrome
         echo "Starting backend server for Chrome tests..."
-        node server.js &
+        node index.js &
         until curl --silent --fail http://localhost:4000; do
           echo "Waiting for backend server to be ready..."
           sleep 2
@@ -64,7 +64,7 @@ jobs:
         cp -R public/* instrumented-cypress/
         npx nyc instrument public instrumented-cypress --output instrumented-cypress
         echo "Starting backend server for Cypress tests..."
-        node server.js &
+        node index.js &
         until curl --silent --fail http://localhost:4000; do
           echo "Waiting for backend server to be ready..."
           sleep 2
@@ -85,7 +85,7 @@ jobs:
         cp -R public/* instrumented-firefox/
         npx nyc instrument public instrumented-firefox --output instrumented-firefox
         echo "Starting backend server for Firefox tests..."
-        node server.js &
+        node index.js &
         until curl --silent --fail http://localhost:4000; do
           echo "Waiting for backend server to be ready..."
           sleep 2
