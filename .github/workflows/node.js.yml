@@ -30,11 +30,15 @@ jobs:
     - run: npm run build --if-present
     - name: Run tests in "tests" folder
       run: npm run backend-test
-    - name: Instrument the frontend code
+    - name: Instrument the frontend code (cypress)
       run: cp -R public instrumented & npx nyc instrument public instrumented
     - name: Run the frontend test cases (cypress)
       run: npm run frontend-test:cypress
+    - name: Instrument the frontend code (chrome)
+      run: cp -R public instrumented & npx nyc instrument public instrumented
     - name: Run the frontend test cases (chrome)
       run: npm run frontend-test:chrome
+    - name: Instrument the frontend code (firefox)
+      run: cp -R public instrumented & npx nyc instrument public instrumented
     - name: Run the frontend test cases (firefox)
       run: npm run frontend-test:firefox
