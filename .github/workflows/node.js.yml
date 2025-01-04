@@ -49,7 +49,7 @@ jobs:
           sleep 2
         done
         echo "Running frontend tests on Chrome..."
-        npm run frontend-test:chrome
+        npx cypress run --browser chrome --headless
       env:
         CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
@@ -70,7 +70,7 @@ jobs:
           sleep 2
         done
         echo "Running frontend tests on Cypress..."
-        npm run frontend-test:cypress
+        npx cypress run --headless
       env:
         CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
