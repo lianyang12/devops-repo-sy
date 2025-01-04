@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        browser: [chrome, firefox, edge]  # Add browsers you want to test
+        browser: [chrome, firefox, electron]  # Add browsers you want to test
 
     steps:
     - uses: actions/checkout@v4
