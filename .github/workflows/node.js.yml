@@ -32,5 +32,9 @@ jobs:
       run: npm run backend-test
     - name: Instrument the frontend code
       run: cp -R public instrumented & npx nyc instrument public instrumented
-    - name: Run the frontend test cases
-      run: npm run frontend-test-GA
+    - name: Run the frontend test cases (cypress)
+      run: npm run frontend-test:cypress
+    - name: Run the frontend test cases (chrome)
+      run: npm run frontend-test:chrome
+    - name: Run the frontend test cases (firefox)
+      run: npm run frontend-test:firefox
