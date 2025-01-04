@@ -29,14 +29,24 @@ jobs:
       run: npm run backend-test
     - name: Debug Public Folder
       run: ls -la public
-    - name: Instrument Frontend Code
-      run: |
-        mkdir -p instrumented
-        cp -R public/* instrumented/
-        npx nyc instrument public instrumented --output instrumented
     - name: Run Frontend Tests (Chrome)
-      run: npm run frontend-test:chrome
+      run: |
+        mkdir -p instrumented-chrome
+        cp -R public/* instrumented-chrome/
+        npx nyc instrument public instrumented-chrome --output instrumented-chrome
+        npm run frontend-test:chrome
+    
     - name: Run Frontend Tests (Cypress)
-      run: npm run frontend-test:cypress
+      run: |
+        mkdir -p instrumented-cypress
+        cp -R public/* instrumented-cypress/
+        npx nyc instrument public instrumented-cypress --output instrumented-cypress
+        npm run frontend-test:cypress
+    
     - name: Run Frontend Tests (Firefox)
-      run: npm run frontend-test:firefox
+      run: |
+        mkdir -p instrumented-firefox
+        cp -R public/* instrumented-firefox/
+        npx nyc instrument public instrumented-firefox --output instrumented-firefox
+        npm run frontend-test:firefox
+
