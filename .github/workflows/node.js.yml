@@ -25,24 +25,36 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    
     - name: Run Backend Tests
       run: npm run backend-test
-    - name: Debug Public Folder
-      run: ls -la public
+
     - name: Run Frontend Tests (Chrome)
       run: |
         mkdir -p instrumented-chrome
         cp -R public/* instrumented-chrome/
         npx nyc instrument public instrumented-chrome --output instrumented-chrome
         npm run frontend-test:chrome
-    
+        
+    - name: Wait Between Runs
+      run: sleep 10
+    - name: Clean Temporary Files
+      run: |
+        rm -rf .nyc_output coverage cypress/screenshots cypress/videos
+
     - name: Run Frontend Tests (Cypress)
       run: |
         mkdir -p instrumented-cypress
         cp -R public/* instrumented-cypress/
         npx nyc instrument public instrumented-cypress --output instrumented-cypress
         npm run frontend-test:cypress
-    
+
+    - name: Wait Between Runs
+      run: sleep 10
+    - name: Clean Temporary Files
+      run: |
+        rm -rf .nyc_output coverage cypress/screenshots cypress/videos
+        
     - name: Run Frontend Tests (Firefox)
       run: |
         mkdir -p instrumented-firefox
