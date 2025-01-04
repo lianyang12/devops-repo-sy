@@ -10,55 +10,90 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    
+        cache: npm
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Build the Project
+      run: npm run build --if-present
+
     - name: Run Backend Tests
       run: npm run backend-test
 
+    # Frontend Tests - Chrome
     - name: Run Frontend Tests (Chrome)
       run: |
+        echo "Setting up Chrome test environment..."
         mkdir -p instrumented-chrome
         cp -R public/* instrumented-chrome/
         npx nyc instrument public instrumented-chrome --output instrumented-chrome
+        echo "Starting backend server for Chrome tests..."
+        node server.js &
+        until curl --silent --fail http://localhost:4000; do
+          echo "Waiting for backend server to be ready..."
+          sleep 2
+        done
+        echo "Running frontend tests on Chrome..."
         npm run frontend-test:chrome
-        
-    - name: Wait Between Runs
-      run: sleep 10
-    - name: Clean Temporary Files
-      run: |
-        rm -rf .nyc_output coverage cypress/screenshots cypress/videos
+      env:
+        CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
+    - name: Clean Temporary Files (Chrome)
+      run: rm -rf .nyc_output coverage cypress/screenshots cypress/videos instrumented-chrome
+
+    # Frontend Tests - Cypress (Electron)
     - name: Run Frontend Tests (Cypress)
       run: |
+        echo "Setting up Cypress test environment..."
         mkdir -p instrumented-cypress
         cp -R public/* instrumented-cypress/
         npx nyc instrument public instrumented-cypress --output instrumented-cypress
+        echo "Starting backend server for Cypress tests..."
+        node server.js &
+        until curl --silent --fail http://localhost:4000; do
+          echo "Waiting for backend server to be ready..."
+          sleep 2
+        done
+        echo "Running frontend tests on Cypress..."
         npm run frontend-test:cypress
+      env:
+        CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
-    - name: Wait Between Runs
-      run: sleep 10
-    - name: Clean Temporary Files
-      run: |
-        rm -rf .nyc_output coverage cypress/screenshots cypress/videos
-        
+    - name: Clean Temporary Files (Cypress)
+      run: rm -rf .nyc_output coverage cypress/screenshots cypress/videos instrumented-cypress
+
+    # Frontend Tests - Firefox
     - name: Run Frontend Tests (Firefox)
       run: |
+        echo "Setting up Firefox test environment..."
         mkdir -p instrumented-firefox
         cp -R public/* instrumented-firefox/
         npx nyc instrument public instrumented-firefox --output instrumented-firefox
+        echo "Starting backend server for Firefox tests..."
+        node server.js &
+        until curl --silent --fail http://localhost:4000; do
+          echo "Waiting for backend server to be ready..."
+          sleep 2
+        done
+        echo "Running frontend tests on Firefox..."
         npm run frontend-test:firefox
+      env:
+        CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
+    - name: Clean Temporary Files (Firefox)
+      run: rm -rf .nyc_output coverage cypress/screenshots cypress/videos instrumented-firefox
