@@ -1,0 +1,9 @@
+services:
+  build-rms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lsy2006/rms-docker-assignment-img:v2
+    container_name: rms-docker-assignment-container
+    ports:
+      - "8000:4000"
