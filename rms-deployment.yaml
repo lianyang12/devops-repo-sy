@@ -16,4 +16,4 @@ spec: # defines the desired state of the Deployment.
         - name: rms-container
           image: lsy2006/rms-docker-assignment-img:v2
           ports:
-            - containerPort: 5050 # specifies the port that the application listens on
+            - containerPort: 4000 # specifies the port that the application listens on
