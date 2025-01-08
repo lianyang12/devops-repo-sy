@@ -57,3 +57,21 @@ jobs:
           
       - name: Azure CLI Download
         run: az aks install-cli
+
+      - name: Azure Login
+        run: az login --service-principal -u "c119e108-39a8-492d-a8e2-8643490424be" -p "doc8Q~F4ID~SkPiK4BZHx73A1zum_EzSL6l_mbHT" --tenant "25a99bf0-8e72-472a-ae50-adfbdf0df6f1"
+
+      - name: Azure AKS Creation
+        run: az aks show --resource-group rmsDevOpsGroup --name rmsAKSCluster -o json >nul 2>nul || az aks create --resource-group rmsDevOpsGroup--name rmsAKSCluster --node-count 1 --generate-ssh-keys 2>&1
+
+      - name: Azure Get Credential
+        run: az aks get-credentials --resource-group "rmsDevOpsGroup" --name "rmsAKSCluster" --overwrite-existing --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
+
+      - name: K8s Creation
+        run: |
+          kubectl apply -f rms-deployment.yaml
+          kubectl apply -f rms-service.yaml
+          kubectl rollout history deployment/rms-deployment
+          kubectl get pods
+          kubectl get services
+      
