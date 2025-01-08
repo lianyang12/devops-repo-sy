@@ -28,6 +28,9 @@ jobs:
       # Install dependencies
       - run: npm ci
 
+      - name: Backend Test
+        run: npm run backend-test
+
       # Build the application (if applicable)
       - run: npm run build --if-present
 
