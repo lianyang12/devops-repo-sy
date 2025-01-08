@@ -54,3 +54,6 @@ jobs:
           docker-compose build
           docker-compose up -d  # Use -d for detached mode
           docker-compose push
+          
+      - name: Azure CLI Download
+        run: az aks install-cli
