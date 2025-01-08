@@ -66,7 +66,7 @@ jobs:
       - name: Create Resource Group (if not exists)
         run: |
           az group show --name rmsDevOpsGroup --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664" || \
-          az group create --name rmsDevOpsGroup --location "eastus" --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
+          az group create --name rmsDevOpsGroup --location "centralus" --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
 
       - name: Azure AKS Creation
         run: |
