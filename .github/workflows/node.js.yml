@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        browser: [chrome, firefox, electron]  # Browsers for testing
+        browser: [chrome, firefox, electron]
 
     steps:
       # Checkout the repository
@@ -52,12 +52,17 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       # Build, run, and push Docker image
-      - name: Docker Compose Build, Up & Push
+      - name: Docker Compose Build and Run
         run: |
-          docker-compose build
-          docker-compose up -d  # Use -d for detached mode
-          docker-compose push
-          
+          docker-compose config  # Validate the compose file
+          docker-compose build || exit 1  # Build with error handling
+          docker-compose up || exit 1  # Run without detached mode to see logs
+        env:
+          DOCKER_BUILDKIT: 1  # Enable BuildKit for faster builds
+
+      - name: Push Docker Image
+        run: docker-compose push || exit 1
+
       - name: Azure CLI Download and Upgrade
         run: |
           az aks install-cli
