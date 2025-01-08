@@ -55,23 +55,31 @@ jobs:
           docker-compose up -d  # Use -d for detached mode
           docker-compose push
           
-      - name: Azure CLI Download
-        run: az aks install-cli
+      - name: Azure CLI Download and Upgrade
+        run: |
+          az aks install-cli
+          az upgrade --yes  # Ensure Azure CLI is up-to-date
 
       - name: Azure Login
-        run: az login --service-principal -u "c119e108-39a8-492d-a8e2-8643490424be" -p "doc8Q~F4ID~SkPiK4BZHx73A1zum_EzSL6l_mbHT" --tenant "25a99bf0-8e72-472a-ae50-adfbdf0df6f1"
+        run: az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" --tenant "${{ secrets.AZURE_TENANT_ID }}"
+
+      - name: Create Resource Group (if not exists)
+        run: |
+          az group show --name rmsDevOpsGroup --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664" || \
+          az group create --name rmsDevOpsGroup --location "eastus" --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
 
       - name: Azure AKS Creation
-        run: az aks show --resource-group rmsDevOpsGroup --name rmsAKSCluster -o json >nul 2>nul || az aks create --resource-group rmsDevOpsGroup--name rmsAKSCluster --node-count 1 --generate-ssh-keys 2>&1
+        run: |
+          az aks show --resource-group rmsDevOpsGroup --name rmsAKSCluster --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664" || \
+          az aks create --resource-group rmsDevOpsGroup --name rmsAKSCluster --node-count 1 --generate-ssh-keys --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
 
       - name: Azure Get Credential
-        run: az aks get-credentials --resource-group "rmsDevOpsGroup" --name "rmsAKSCluster" --overwrite-existing --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
+        run: az aks get-credentials --resource-group rmsDevOpsGroup --name rmsAKSCluster --overwrite-existing --subscription "817d3e18-4278-4b40-9af7-3ad7e73f6664"
 
-      - name: K8s Creation
+      - name: Kubernetes Deployment
         run: |
           kubectl apply -f rms-deployment.yaml
           kubectl apply -f rms-service.yaml
           kubectl rollout history deployment/rms-deployment
           kubectl get pods
           kubectl get services
-      
