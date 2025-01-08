@@ -51,15 +51,20 @@ jobs:
       - name: Login to Docker
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # Build, run, and push Docker image
-      - name: Docker Compose Build and Run
+      # Build and run Docker Compose
+      - name: Docker Compose Build and Up
         run: |
           docker-compose config  # Validate the compose file
           docker-compose build || exit 1  # Build with error handling
-          docker-compose up || exit 1  # Run without detached mode to see logs
+          docker-compose up -d || exit 1  # Run in detached mode
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for faster builds
 
+      # Verify Docker Containers
+      - name: Verify Running Containers
+        run: docker ps -a
+
+      # Push Docker Image
       - name: Push Docker Image
         run: docker-compose push || exit 1
 
