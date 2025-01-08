@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js CI/CD
 
 on:
   push:
@@ -28,3 +28,12 @@ jobs:
     - name: Run Cypress tests in ${{ matrix.browser }}
       run: |
         npx cypress run --browser ${{ matrix.browser }}
+        
+    - name: Login to Docker
+      run: docker login -u lsy2006 -p QaZ963963#
+    - name: Docker Compose Build, Up & Push
+      run: |
+        docker-compose build
+        docker-compose up
+        docker-compose push
+
